@@ -1,4 +1,5 @@
 import React from 'react';
+import { MaskedField } from './components';
 
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
         <p>
           Hi Visitor.tsx :D
         </p>
+        <MaskedField/>
     </div>
   );
 }
