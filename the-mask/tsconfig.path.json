@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "path": {
+          "app-types": ["@types/index.ts"],
+        }
+    }
+}
