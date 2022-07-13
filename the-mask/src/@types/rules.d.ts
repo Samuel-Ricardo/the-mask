@@ -1,3 +1,4 @@
+import { ICaracterRules } from './caracter-rules';
 
 export interface IRules {
     caracters?: ICaracterRules
