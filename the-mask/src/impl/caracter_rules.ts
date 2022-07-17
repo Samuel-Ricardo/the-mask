@@ -34,7 +34,9 @@ export const filterSpecialCaractersOfStringOrIgnore = (caracters:string, ignore:
     .reduce(caracter => caracter)
 }  
   
-
+export const filterEspecialCaractersAndIgnore = (caracters:string[], ignore:string[]) => {
+  return caracters.map((caracter) => ignore.filter(ignore => caracter === ignore).length < 0 ? caracter : filterSpecialCaracter(caracter))
+}
 
 export const caracter_rules: IFormatedCaracterRule = {
     HAVE_LETTERS: ({a, z, allowUpercase}) => allowUpercase ? `${a.toLowerCase()}-${z.toLowerCase()}${a.toUpperCase()}-${z.toUpperCase()}` : `${a}-${z}`,
