@@ -24,6 +24,12 @@ export const filterSpecialCaracterOrIgnore = (caracter: string, ignore: boolean)
 
 export const filterEspecialCaracters = (caracters:string[]) => caracters.map((caracter) => filterSpecialCaracter(caracter))
 
+export const filterSpecialCaractersndIgnore = (caracters:string, ignore:string) => {
+  return caracters.split('').map((caracter) => caracter !== ignore ? caracter :  filterSpecialCaracter(caracter))
+} 
+
+
+
 export const caracter_rules: IFormatedCaracterRule = {
     HAVE_LETTERS: ({a, z, allowUpercase}) => allowUpercase ? `${a.toLowerCase()}-${z.toLowerCase()}${a.toUpperCase()}-${z.toUpperCase()}` : `${a}-${z}`,
 
