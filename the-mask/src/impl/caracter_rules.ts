@@ -20,6 +20,8 @@ const filterSpecialCaracter = (caracter:string) => {
   ) {return `\\${caracter}`} else {return caracter}
 } 
 
+export const filterSpecialCaracterOrIgnore = (caracter: string, ignore: boolean) => ignore? caracter : filterSpecialCaracter(caracter);
+
 
 export const caracter_rules: IFormatedCaracterRule = {
     HAVE_LETTERS: ({a, z, allowUpercase}) => allowUpercase ? `${a.toLowerCase()}-${z.toLowerCase()}${a.toUpperCase()}-${z.toUpperCase()}` : `${a}-${z}`,
