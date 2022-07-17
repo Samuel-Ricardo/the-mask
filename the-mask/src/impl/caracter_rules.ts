@@ -28,6 +28,12 @@ export const filterSpecialCaractersndIgnore = (caracters:string, ignore:string) 
   return caracters.split('').map((caracter) => caracter !== ignore ? caracter :  filterSpecialCaracter(caracter))
 } 
 
+export const filterSpecialCaractersOfStringOrIgnore = (caracters:string, ignore:string[]) => {
+  return caracters.split('')
+    .map((caracter) => ignore.filter(ignore => caracter === ignore).length < 0 ? caracter : filterSpecialCaracter(caracter))
+    .reduce(caracter => caracter)
+}  
+  
 
 
 export const caracter_rules: IFormatedCaracterRule = {
