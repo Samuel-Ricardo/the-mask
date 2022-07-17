@@ -13,3 +13,10 @@ export interface IFormatedCaracterRule{
     HAVE_SPECIAL_CARACTERS: (props: IHaveSpecialCaractersProps) => string
     APPLY: (props: IApplyFormatedCaracterRuleProps) => string
 }
+
+export interface IApplyFormatedCaracterRuleProps{
+    LETTERS?: IHaveLettersProps
+    NUMBERS?: IHaveNumbersProps
+    SPECIAL_CARECERS?: IHaveSpecialCaractersProps
+}
+
