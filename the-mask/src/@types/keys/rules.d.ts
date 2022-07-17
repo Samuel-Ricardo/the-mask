@@ -1,7 +1,7 @@
 import { ICaracterRulesKeys, IDefaultCaracterRulesKeys } from './caracters';
 export interface IRuleKeys {
     caracters?:  ICaracterRulesKeys,
-    format?: {},
+    format?: string,
     min_length?: string,
     fixed_length?: string,
     max_length?: string,
