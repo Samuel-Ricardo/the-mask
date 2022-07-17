@@ -31,3 +31,7 @@ export interface IHaveNumbersProps {
     end:string
 }
 
+export interface IHaveSpecialCaractersProps {
+    have:boolean
+    caracters:[string]
+}
