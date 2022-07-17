@@ -26,3 +26,8 @@ export interface IHaveLettersProps {
     allowUpercase:boolean
 }
 
+export interface IHaveNumbersProps {
+    init:string
+    end:string
+}
+
