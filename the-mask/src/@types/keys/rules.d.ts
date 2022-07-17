@@ -9,7 +9,7 @@ export interface IRuleKeys {
 
 export interface IDefaultRuleKeys extends IRuleKeys{
     caracters: IDefaultCaracterRulesKeys,
-    format: {},
+    format: `format_matches`,
     min_length: `min_length`,
     fixed_length: `fixed_length`,
     max_length: `max_length`,
