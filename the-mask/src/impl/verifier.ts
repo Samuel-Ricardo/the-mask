@@ -1,5 +1,7 @@
 import { IRules } from 'app-types';
+import { RULE_KEYS } from 'const';
 import { IVerifier } from '../@types/verifier';
+import { caracter_rules, filterEspecialCaracters, filterSpecialCaracterOrIgnore, filterEspecialCaractersAndIgnore, filterSpecialCaractersOfStringOrIgnore } from './caracter_rules';
 
 /*
 const verifier:IVerifier = {
@@ -15,12 +17,28 @@ const verifier:IVerifier = {
 export const getVerifier = (rules: IRules):IVerifier => {
     return { 
         rules,
-        verify(){
+        verify(content){
 
-            return [true]
+            const results = new Map<string,boolean>()
+            
+            const {
+                caracters,
+                format,
+                max_length,
+                min_length,
+                fixed_length, 
+             } = rules
+            
+            if(fixed_length) results.set(RULE_KEYS.fixed_length, content.length === fixed_length)
+            if(max_length) results.set(RULE_KEYS.max_length, content.length <= max_length)
+            if(min_length) results.set(RULE_KEYS.min_length, content.length >= min_length)
+
+            
+            return results;
         },
-        apply() {
-            return [true]
+        apply(content) {
+            const results = new Map<string,boolean>()
+            return results;
         },
     }
 }
