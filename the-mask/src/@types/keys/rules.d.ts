@@ -14,4 +14,3 @@ export interface IDefaultRuleKeys extends IRuleKeys{
     fixed_length: `fixed_length`,
     max_length: `max_length`,
 } 
-
