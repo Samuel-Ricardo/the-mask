@@ -1,5 +1,26 @@
 import { IFormatedCaracterRule } from "app-types";
 
+const filterSpecialCaracter = (caracter:string) => {
+  if(
+    caracter === "." ||
+    caracter === "-" ||
+    caracter === "+" ||
+    caracter === "*" ||
+    caracter === "?" ||
+    caracter === "^" ||
+    caracter === "$" ||
+    caracter === "(" ||
+    caracter === ")" ||
+    caracter === "[" ||
+    caracter === "]" ||
+    caracter === "{" ||
+    caracter === "}" ||
+    caracter === "|" ||
+    caracter === "\\"
+  ) {return `\\${caracter}`} else {return caracter}
+} 
+
+
 export const caracter_rules: IFormatedCaracterRule = {
     HAVE_LETTERS: ({a, z, allowUpercase}) => allowUpercase ? `${a.toLowerCase()}-${z.toLowerCase()}${a.toUpperCase()}-${z.toUpperCase()}` : `${a}-${z}`,
 
