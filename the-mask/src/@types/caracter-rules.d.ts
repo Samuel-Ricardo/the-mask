@@ -20,3 +20,9 @@ export interface IApplyFormatedCaracterRuleProps{
     SPECIAL_CARECERS?: IHaveSpecialCaractersProps
 }
 
+export interface IHaveLettersProps {
+    a:string
+    z:string
+    allowUpercase:boolean
+}
+
