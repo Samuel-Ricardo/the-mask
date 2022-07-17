@@ -1,6 +1,6 @@
-import { ICaracterRules } from "./caracter-rules";
+import { IFormatedCaracterRule } from "./caracter-rules";
 
 export interface IReplacebleString{
     key: string;
-    value: [ICaracterRules]
+    value: [IFormatedCaracterRule]
 }
