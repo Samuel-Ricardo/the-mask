@@ -16,7 +16,7 @@ const verifier:IVerifier = {
 */
 
 
-const verifyRules = (content:string, rules:IRules) => {
+export const verifyRules = (content:string, rules:IRules) => {
     const results = new Map<string,boolean>()
             
     const {
