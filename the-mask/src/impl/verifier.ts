@@ -41,7 +41,22 @@ export const getVerifier = (rules: IRules):IVerifier => {
                 if(caracters.must_have) caracters.must_have.forEach((caracter) => results.set(RULE_KEYS.caracters.must_have(caracter), content.includes(caracter)))
             }
 
+            if(format) {
 
+                format.model = filterSpecialCaractersOfStringOrIgnore(format.model, format.string_to_replace.map(string => string.key))
+
+                format.string_to_replace.forEach(string => {
+                    const this_regex = `[`
+                        string.value.forEach(rule => this_regex.concat(rule.APPLY(rule.PROPS)))
+                    this_regex.concat(`]`)
+                    format.model.replace(string.key, this_regex)
+                })
+                
+                const matchResult = content.match(`/^${format.model}$/`) 
+                const result = matchResult ? matchResult.length > 0 : false
+
+                results.set(RULE_KEYS.format, result)
+            }
 
             return results;
         },
