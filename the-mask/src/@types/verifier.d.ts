@@ -1,10 +1,14 @@
 import { IRules } from './rules';
-export interface IVerifier {
+
+export interface IVerifier extends IVerifiable{
     rules: IRules
-    verify: (content: string) => Map<string, boolean>
-    apply?: (content: string) => Map<string, boolean>
 }
 
 export interface IVerifyResult {
 
+}
+
+export interface IVerifiable {
+    verify: (content: string) => Map<string, boolean>
+    apply?: (content: string) => Map<string, boolean>
 }
