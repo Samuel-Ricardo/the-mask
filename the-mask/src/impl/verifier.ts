@@ -15,7 +15,19 @@ const verifier:IVerifier = {
 }
 */
 
+export const VerifyCaracterRules = (content: string, caracters: ICaracterRules) => {
+    const results = new Map<string,boolean>();
 
+    if(caracters) {
+        if(caracters.all_lowercase) results.set(RULE_KEYS.caracters.all_lowercase, content.toLowerCase() === content)
+        if(caracters.all_upercase) results.set(RULE_KEYS.caracters.all_upercase, content.toUpperCase() === content)
+        
+        if(caracters.dont_have) caracters.dont_have.forEach((caracter) => results.set(RULE_KEYS.caracters.dont_have(caracter), !content.includes(caracter)))
+        if(caracters.must_have) caracters.must_have.forEach((caracter) => results.set(RULE_KEYS.caracters.must_have(caracter), content.includes(caracter)))
+    }
+
+    return results;
+}
 
 const mergeMaps = (map1:Map<any,any>, map2:Map<any,any>) => {
     map2.forEach((value, key) => map1.set(key,value))
