@@ -1,4 +1,4 @@
-import { IFormatedCaracterRule } from "app-types";
+import { IFormatedCaracterRule, IApplyFormatedCaracterRuleProps } from "app-types";
 
 const filterSpecialCaracter = (caracter:string) => {
   if(
@@ -38,7 +38,17 @@ export const filterEspecialCaractersAndIgnore = (caracters:string[], ignore:stri
   return caracters.map((caracter) => ignore.filter(ignore => caracter === ignore).length < 0 ? caracter : filterSpecialCaracter(caracter))
 }
 
-export const caracter_rules: IFormatedCaracterRule = {
+export const caracter_rules = (PROPS:IApplyFormatedCaracterRuleProps): IFormatedCaracterRule => {return {
+    PROPS,
+    APPLY(props) {
+      const result = '';
+      
+      if(props.LETTERS) result.concat(this.HAVE_LETTERS? this.HAVE_LETTERS(props.LETTERS) : '') 
+      if(props.NUMBERS) result.concat(this.HAVE_NUMBER? this.HAVE_NUMBER(props.NUMBERS) : '')
+      if(props.SPECIAL_CARECERS) result.concat(this.HAVE_SPECIAL_CARACTERS? this.HAVE_SPECIAL_CARACTERS(props.SPECIAL_CARECERS): '')
+      
+      return result
+    },
     HAVE_LETTERS: ({a, z, allowUpercase}) => allowUpercase ? `${a.toLowerCase()}-${z.toLowerCase()}${a.toUpperCase()}-${z.toUpperCase()}` : `${a}-${z}`,
 
     HAVE_NUMBER: ({init, end}) => `${init}-${end}`,
@@ -50,4 +60,5 @@ export const caracter_rules: IFormatedCaracterRule = {
       
       return regex
     }
+  }
 }
