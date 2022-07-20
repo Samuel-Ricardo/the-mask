@@ -1,7 +1,8 @@
-import { IRules } from 'app-types';
+import { IFormat, IRules } from 'app-types';
 import { RULE_KEYS } from 'const';
 import { IVerifier, ICaracterRules } from 'app-types';
 import { filterSpecialCaractersOfStringOrIgnore } from './caracter_rules';
+import { verify } from 'crypto';
 
 /*
 const verifier:IVerifier = {
@@ -29,6 +30,26 @@ export const VerifyCaracterRules = (content: string, caracters: ICaracterRules) 
     return results;
 }
 
+const verifyFormatRules = (content: string, format: IFormat) => {
+    const results = new Map<string,boolean>();
+    if(!format) return results;
+
+    format.model = filterSpecialCaractersOfStringOrIgnore(format.model, format.string_to_replace.map(string => string.key))
+
+        format.string_to_replace.forEach(string => {
+            const this_regex = `[`
+                string.value.forEach(rule => this_regex.concat(rule.APPLY(rule.PROPS)))
+            this_regex.concat(`]`)
+            format.model.replace(string.key, this_regex)
+        })
+        
+    const matchResult = content.match(`/^${format.model}$/`) 
+    const result = matchResult ? matchResult.length > 0 : false
+
+    results.set(RULE_KEYS.format, result)
+    return results;
+}
+
 const mergeMaps = (map1:Map<any,any>, map2:Map<any,any>) => {
     map2.forEach((value, key) => map1.set(key,value))
     return map1;
@@ -49,24 +70,8 @@ export const verifyRules = (content:string, rules:IRules) => {
     if(max_length) results.set(RULE_KEYS.max_length, content.length <= max_length)
     if(min_length) results.set(RULE_KEYS.min_length, content.length >= min_length)
 
-    if(caracters) mergeMaps(results, VerifyCaracterRules(content, caracters))
-
-    if(format) {
-
-        format.model = filterSpecialCaractersOfStringOrIgnore(format.model, format.string_to_replace.map(string => string.key))
-
-        format.string_to_replace.forEach(string => {
-            const this_regex = `[`
-                string.value.forEach(rule => this_regex.concat(rule.APPLY(rule.PROPS)))
-            this_regex.concat(`]`)
-            format.model.replace(string.key, this_regex)
-        })
-        
-        const matchResult = content.match(`/^${format.model}$/`) 
-        const result = matchResult ? matchResult.length > 0 : false
-
-        results.set(RULE_KEYS.format, result)
-    }
+    if(caracters) results = mergeMaps(results, VerifyCaracterRules(content, caracters))
+    if(format) results = mergeMaps(results, verifyFormatRules(content, format))
 
     return results;
 }
