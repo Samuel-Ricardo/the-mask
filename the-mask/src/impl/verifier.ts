@@ -1,6 +1,6 @@
 import { IRules } from 'app-types';
 import { RULE_KEYS } from 'const';
-import { IVerifier } from '../@types/verifier';
+import { IVerifier, ICaracterRules } from 'app-types';
 import { filterSpecialCaractersOfStringOrIgnore } from './caracter_rules';
 
 /*
@@ -16,9 +16,15 @@ const verifier:IVerifier = {
 */
 
 
+
+const mergeMaps = (map1:Map<any,any>, map2:Map<any,any>) => {
+    map2.forEach((value, key) => map1.set(key,value))
+    return map1;
+}
+
 export const verifyRules = (content:string, rules:IRules) => {
-    const results = new Map<string,boolean>()
-            
+    var results = new Map<string,boolean>()
+
     const {
         caracters,
         format,
@@ -31,13 +37,7 @@ export const verifyRules = (content:string, rules:IRules) => {
     if(max_length) results.set(RULE_KEYS.max_length, content.length <= max_length)
     if(min_length) results.set(RULE_KEYS.min_length, content.length >= min_length)
 
-    if(caracters) {
-        if(caracters.all_lowercase) results.set(RULE_KEYS.caracters.all_lowercase, content.toLowerCase() === content)
-        if(caracters.all_upercase) results.set(RULE_KEYS.caracters.all_upercase, content.toUpperCase() === content)
-        
-        if(caracters.dont_have) caracters.dont_have.forEach((caracter) => results.set(RULE_KEYS.caracters.dont_have(caracter), !content.includes(caracter)))
-        if(caracters.must_have) caracters.must_have.forEach((caracter) => results.set(RULE_KEYS.caracters.must_have(caracter), content.includes(caracter)))
-    }
+    if(caracters) mergeMaps(results, VerifyCaracterRules(content, caracters))
 
     if(format) {
 
