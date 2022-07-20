@@ -8,9 +8,9 @@ export interface ICaracterRules {
 
 export interface IFormatedCaracterRule{
     PROPS: IApplyFormatedCaracterRuleProps
-    HAVE_LETTERS: (props: IHaveLettersProps) => string
-    HAVE_NUMBER: (props: IHaveNumbersProps) => string
-    HAVE_SPECIAL_CARACTERS: (props: IHaveSpecialCaractersProps) => string
+    HAVE_LETTERS?: (props: IHaveLettersProps) => string
+    HAVE_NUMBER?: (props: IHaveNumbersProps) => string
+    HAVE_SPECIAL_CARACTERS?: (props: IHaveSpecialCaractersProps) => string
     APPLY: (props: IApplyFormatedCaracterRuleProps) => string
 }
 
