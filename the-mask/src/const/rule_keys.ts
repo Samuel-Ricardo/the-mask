@@ -10,6 +10,6 @@ export const RULE_KEYS:IDefaultRuleKeys = {
     min_length: "min_length",
     fixed_length: `fixed_length`,
     max_length: `max_length`,
-    format: {},
+    format: "format_matches",
 } 
 
