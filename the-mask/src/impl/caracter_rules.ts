@@ -29,9 +29,13 @@ export const filterSpecialCaractersndIgnore = (caracters:string, ignore:string) 
 } 
 
 export const filterSpecialCaractersOfStringOrIgnore = (caracters:string, ignore:string[]) => {
+  console.log("")
+  console.log("filtro")
+  console.log(ignore)
+  console.log("")
   return caracters.split('')
-    .map((caracter) => ignore.filter(ignore => caracter === ignore).length < 0 ? caracter : filterSpecialCaracter(caracter))
-    .reduce(caracter => caracter)
+    .map((caracter) => ignore.includes(caracter) ? caracter : filterSpecialCaracter(caracter))
+    .reduce((previus, current) => previus.concat(current))
 }  
   
 export const filterEspecialCaractersAndIgnore = (caracters:string[], ignore:string[]) => {
@@ -41,11 +45,11 @@ export const filterEspecialCaractersAndIgnore = (caracters:string[], ignore:stri
 export const caracter_rules = (PROPS:IApplyFormatedCaracterRuleProps): IFormatedCaracterRule => {return {
     PROPS,
     APPLY(props) {
-      const result = '';
+      var result = '';
       
-      if(props.LETTERS) result.concat(this.HAVE_LETTERS? this.HAVE_LETTERS(props.LETTERS) : '') 
-      if(props.NUMBERS) result.concat(this.HAVE_NUMBER? this.HAVE_NUMBER(props.NUMBERS) : '')
-      if(props.SPECIAL_CARECERS) result.concat(this.HAVE_SPECIAL_CARACTERS? this.HAVE_SPECIAL_CARACTERS(props.SPECIAL_CARECERS): '')
+      if(props.LETTERS) result = result.concat(this.HAVE_LETTERS? this.HAVE_LETTERS(props.LETTERS) : '') 
+      if(props.NUMBERS) result = result.concat(this.HAVE_NUMBER? this.HAVE_NUMBER(props.NUMBERS) : '')
+      if(props.SPECIAL_CARECERS) result = result.concat(this.HAVE_SPECIAL_CARACTERS? this.HAVE_SPECIAL_CARACTERS(props.SPECIAL_CARECERS): '')
       
       return result
     },
@@ -53,11 +57,9 @@ export const caracter_rules = (PROPS:IApplyFormatedCaracterRuleProps): IFormated
 
     HAVE_NUMBER: ({init, end}) => `${init}-${end}`,
     
-    HAVE_SPECIAL_CARACTERS: ({have, caracters}) => {
+    HAVE_SPECIAL_CARACTERS: ({caracters}) => {
       const regex = ``
-      
-      if(have)filterEspecialCaracters(caracters).forEach(caracter => {regex.concat(caracter)});
-      
+        filterEspecialCaracters(caracters).forEach(caracter => {regex.concat(caracter)});
       return regex
     }
   }
