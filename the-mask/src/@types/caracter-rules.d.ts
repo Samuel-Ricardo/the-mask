@@ -1,7 +1,7 @@
 
 export interface ICaracterRules {
-    must_have?: [string]
-    dont_have?: [string]
+    must_have?: string[]
+    dont_have?: string[]
     all_upercase?: boolean
     all_lowercase?: boolean
 }
@@ -32,6 +32,5 @@ export interface IHaveNumbersProps {
 }
 
 export interface IHaveSpecialCaractersProps {
-    have:boolean
-    caracters:[string]
+    caracters:string[]
 }
