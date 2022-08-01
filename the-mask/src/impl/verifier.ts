@@ -1,20 +1,7 @@
 import { IFormat, IRules } from 'app-types';
-import { RULE_KEYS } from 'const';
+import { RULE_KEYS } from '../const';
 import { IVerifier, ICaracterRules } from 'app-types';
 import { filterSpecialCaractersOfStringOrIgnore } from './caracter_rules';
-import { verify } from 'crypto';
-
-/*
-const verifier:IVerifier = {
-    rules: {
-        caracters:
-    },
-    apply(){
-        
-        return [true]
-    }
-}
-*/
 
 export const VerifyCaracterRules = (content: string, caracters: ICaracterRules) => {
     const results = new Map<string,boolean>();
@@ -30,20 +17,23 @@ export const VerifyCaracterRules = (content: string, caracters: ICaracterRules) 
     return results;
 }
 
-const verifyFormatRules = (content: string, format: IFormat) => {
+export const verifyFormatRules = (content: string, format: IFormat) => {
     const results = new Map<string,boolean>();
     if(!format) return results;
 
-    format.model = filterSpecialCaractersOfStringOrIgnore(format.model, format.string_to_replace.map(string => string.key))
+    var model = filterSpecialCaractersOfStringOrIgnore(format.model, format.string_to_replace.map(string => string.key))
+
+    content = content.trim();
 
         format.string_to_replace.forEach(string => {
-            const this_regex = `[`
-                string.value.forEach(rule => this_regex.concat(rule.APPLY(rule.PROPS)))
-            this_regex.concat(`]`)
-            format.model.replace(string.key, this_regex)
+            var this_regex = `[`
+                string.value.forEach(rule => this_regex = this_regex.concat(rule.APPLY(rule.PROPS)))
+            this_regex = this_regex.concat(`]`)
+            model = model.replaceAll(string.key, this_regex)
         })
         
-    const matchResult = content.match(`/^${format.model}$/`) 
+        
+    const matchResult = content.match(RegExp(`^${model}$`)) 
     const result = matchResult ? matchResult.length > 0 : false
 
     results.set(RULE_KEYS.format, result)
@@ -82,7 +72,21 @@ export const getVerifier = (rules: IRules):IVerifier => {
         rules,
         verify: content => verifyRules(content, rules),
         apply(content) {
-            const results = new Map<string,boolean>()
+            const results = this.verify(content);
+/*
+            results.get(RULE_KEYS.fixed_length) ?  :  
+
+            results.forEach((value,key) => {
+                switch (key) {
+                    RULE_KEYS.max_length: 
+                        
+                        break;
+                    default:
+
+                        break;
+                }
+            })
+            */
             return results;
         },
     }
