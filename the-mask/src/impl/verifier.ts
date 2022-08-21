@@ -72,22 +72,26 @@ export const getVerifier = (rules: IRules):IVerifier => {
         rules,
         verify: content => verifyRules(content, rules),
         apply(content) {
-            const results = this.verify(content);
-/*
-            results.get(RULE_KEYS.fixed_length) ?  :  
+            try{
+                const result = this.verify(content);
 
-            results.forEach((value,key) => {
-                switch (key) {
-                    RULE_KEYS.max_length: 
-                        
-                        break;
-                    default:
+                //console.log()
 
-                        break;
-                }
-            })
-            */
-            return results;
+                if(!result.get(RULE_KEYS.fixed_length)) content = content.slice(0,rules.fixed_length);   
+                if(!result.get(RULE_KEYS.max_length)) content = content.slice(0,rules.max_length);
+
+                if(!result.get(RULE_KEYS.caracters.all_lowercase)) content = rules.caracters?.all_lowercase? content.toLocaleLowerCase() : content;
+                if(!result.get(RULE_KEYS.caracters.all_upercase)) content = rules.caracters?.all_upercase? content.toLocaleUpperCase() : content;
+                
+                rules.caracters?.dont_have?.forEach(caracter => {if(!result.get(RULE_KEYS.caracters.dont_have(caracter))) content = content.replaceAll(caracter,'')})
+                
+                //if(!result.get(RULE_KEYS.format)) content = content.replace(rules.format!.model, "$1")
+
+                return {result, content};
+            }catch(error){
+                console.error(error)
+                return {result: new Map<string,boolean>().set("ERROR",true), content: content}
+            }
         },
     }
 }

@@ -17,7 +17,7 @@ export const MaskedField = (props: any) => {
 
     const verifier = getVerifier({
       min_length: 5,
-      max_length: 10,
+      max_length: 20,
       caracters:{
         all_lowercase: true,
         all_upercase: false,
@@ -37,7 +37,8 @@ export const MaskedField = (props: any) => {
 
     useEffect(() => {
       if(content)
-        console.log(verifier.verify(content))
+        console.log(verifier.apply!(content))
+        setContent(verifier.apply!(content).content)
         console.log(content)
     },[content])
 
